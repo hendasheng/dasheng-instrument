@@ -38,6 +38,32 @@ apps/web/src/styles.css
 apps/web/src/vite-env.d.ts
 ```
 
+## Libraries
+
+Current runtime libraries:
+
+- `react`: UI rendering.
+- `react-dom`: DOM mounting.
+- `lucide-react`: icons.
+- `tone`: planned audio/sampler layer; current 0.1 audio still uses Web Audio API directly.
+
+Current build/tooling libraries:
+
+- `vite`: dev server and build.
+- `@vitejs/plugin-react`: React support for Vite.
+- `typescript`: type checking.
+- `@types/react`: React type declarations.
+- `@types/react-dom`: React DOM type declarations.
+
+Icon rules:
+
+- Use `lucide-react` for UI icons.
+- Do not hand-write SVG icons unless there is no suitable lucide icon.
+- Current playback icons:
+  - Play: `Play`
+  - Stop/pause playback state: `Pause`
+  - Loop: `Repeat`
+
 Current interaction model:
 
 - Key is expanded as 12 direct buttons.
