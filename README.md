@@ -10,6 +10,12 @@ Live demo:
 https://hendasheng.github.io/dasheng-instrument/
 ```
 
+Current version demo:
+
+```text
+https://hendasheng.github.io/dasheng-instrument/0.1/
+```
+
 项目先从吉他练习开始，但不会限定在 Guitar。长期方向是把音阶、和弦、指板、音程、节奏、听力、MIDI 和实际演奏连接成一个可以直接操作的练习环境。
 
 ## Why
@@ -149,7 +155,9 @@ The live demo is deployed with GitHub Pages through GitHub Actions.
 - Workflow: `.github/workflows/pages.yml`
 - Build command: `npm run build`
 - Published directory: `apps/web/dist`
-- Vite base path: `/dasheng-instrument/`
+- Latest demo URL: `/dasheng-instrument/`
+- Current version URL: `/dasheng-instrument/0.1/`
+- Vite base path: `/dasheng-instrument/0.1/`
 
 GitHub repository setting:
 
