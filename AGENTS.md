@@ -91,6 +91,12 @@ Current build/tooling libraries:
 - `@types/react`: React type declarations.
 - `@types/react-dom`: React DOM type declarations.
 
+## Product and Design References
+
+References are not runtime dependencies. Record external products here when their interaction model, information architecture, or music-theory presentation informs Loudroom. Use them as attributed research, not as assets or interfaces to copy verbatim.
+
+- [muted.io Guitar Scales](https://muted.io/guitar-scales/): reference for mapping scales across the full guitar fretboard and highlighting practice positions with CAGED. Keep the full scale as dimmed context while selecting one of the `C`, `A`, `G`, `E`, or `D` position shapes.
+
 Icon rules:
 
 - Use `lucide-react` for UI icons.
@@ -105,13 +111,19 @@ Current interaction model:
 - Key is expanded as 12 direct buttons.
 - Scale is a compact select, because the list will grow.
 - Fretboard label mode is local to the fretboard.
+- Fretboard position mode supports `All` and `CAGED`; CAGED exposes the five `C`, `A`, `G`, `E`, `D` shapes and dims scale notes outside the selected contiguous position.
+- The scale strip occupies its own full row; the row below places Position on the left and Labels on the right. Position uses a standalone `All` button beside one segmented `C / A / G / E / D` CAGED control; do not render All as a sixth CAGED segment or fake the hierarchy with an extra divider line.
 - `Note` mode shows note names.
 - `Degree` mode shows scale degrees.
 - `Root` mode only labels root notes.
 - Non-scale notes do not render marker dots.
 - Scale notes and fretboard markers are clickable and must provide hover/click/focus feedback.
 - `Play scale` must behave as a play/stop toggle and must not stack playback queues.
-- Loop playback is controlled by a separate icon button beside play; when loop is off, playback runs once.
+- While scale playback is active, a small hardware-style green signal light at the play button's bottom-right must pulse in sync with each note.
+- During scale playback, the current note in the scale strip must show the same visual feedback as a click; fretboard markers do not animate with playback.
+- Loop playback is controlled by a separate icon button beside play; repetitions pause for two note intervals, and when loop is off playback runs once.
+- Audio playback must reuse a shared AudioContext and disconnect finished per-note nodes so mobile loop playback does not exhaust browser audio resources.
+- Oscillator playback uses a `0.6` peak gain with short attack/release ramps; do not quietly reduce it without an explicit volume-control design.
 
 Current scales:
 
@@ -128,6 +140,12 @@ Current scales:
 ## UI Direction
 
 The visual direction is a dark, solid, component-library-like tool UI. It should feel closer to ChordKit's theory pages than to a glowing music visualizer.
+
+Implementation order:
+
+- Implement and verify every new feature on desktop first.
+- Only after the desktop behavior and layout are settled, adapt the feature for mobile.
+- Do not let mobile constraints prematurely change the desktop interaction model.
 
 Prefer:
 
@@ -149,7 +167,11 @@ Avoid:
 
 Specific current choices:
 
-- Fret numbers are hidden; fret markers use dots at 3, 5, 7, 9 and double dots at 12.
+- The fretboard covers frets 0-15. Fret numbers are hidden; fret markers use dots at 3, 5, 7, 9 and double dots at 12.
+- In phone portrait orientation, transpose the fretboard to six string columns with frets running top to bottom; keep labels upright rather than rotating the whole UI.
+- On mobile, hide the duplicate current-context summary; keep the workbench heading and playback controls on one row, and keep the scale strip on a single row.
+- On mobile, hide the Position and Labels group headings and keep both control groups on one non-wrapping row; button text must remain fully readable.
+- On mobile, use `11px` workbench padding instead of the desktop `16px` to preserve limited content width.
 - Scale summary uses centered circular note dots and Roman degrees.
 - Scale summary root is not specially highlighted, because the current key is already emphasized elsewhere.
 - Fretboard grid lines should be weaker than guitar string lines.
