@@ -28,6 +28,32 @@ npm run build
 
 Do not move app code back into the root directory. The root should stay as the workspace and documentation layer.
 
+## GitHub Pages
+
+The public demo is deployed through GitHub Pages with GitHub Actions.
+
+Expected URL:
+
+```text
+https://hendasheng.github.io/dasheng-instrument/
+```
+
+Deployment files/settings:
+
+- Workflow: `.github/workflows/pages.yml`
+- Vite config: `apps/web/vite.config.ts`
+- Vite `base`: `/dasheng-instrument/`
+- Build command: `npm run build`
+- Pages artifact path: `apps/web/dist`
+- Repository setting: `Settings -> Pages -> Source -> GitHub Actions`
+
+Notes:
+
+- The app is served from a repository subpath, so keep Vite `base` aligned with the repository name.
+- If Actions fails at `Configure Pages` with `Get Pages site failed`, the repository Pages setting is probably not enabled for GitHub Actions yet.
+- If the site loads but assets 404, check Vite `base`.
+- Node version in the workflow is currently `22`.
+
 ## Current Web App
 
 Main files:

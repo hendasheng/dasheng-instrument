@@ -142,6 +142,21 @@ npm run build
 
 The app lives in `apps/web`, but the root package provides workspace scripts, so normal commands should be run from the repository root.
 
+## Deployment
+
+The live demo is deployed with GitHub Pages through GitHub Actions.
+
+- Workflow: `.github/workflows/pages.yml`
+- Build command: `npm run build`
+- Published directory: `apps/web/dist`
+- Vite base path: `/dasheng-instrument/`
+
+GitHub repository setting:
+
+```text
+Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
+```
+
 ## Project Structure
 
 ```text
