@@ -4,17 +4,7 @@
 
 Current version: **0.1**.
 
-Live demo:
-
-```text
-https://hendasheng.github.io/dasheng-instrument/
-```
-
-Current version demo:
-
-```text
-https://hendasheng.github.io/dasheng-instrument/0.1/
-```
+Live demo: [Open Loudroom / 大声练琴](https://hendasheng.github.io/dasheng-instrument/)
 
 项目先从吉他练习开始，但不会限定在 Guitar。长期方向是把音阶、和弦、指板、音程、节奏、听力、MIDI 和实际演奏连接成一个可以直接操作的练习环境。
 
