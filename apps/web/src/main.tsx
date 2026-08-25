@@ -343,6 +343,34 @@ function App() {
     stopScale();
   }, [keyNote, selectedScale]);
 
+  useEffect(() => {
+    function toggleFullscreen(event: KeyboardEvent) {
+      const target = event.target;
+      const isEditing = target instanceof HTMLElement
+        && (target.matches("input, select, textarea") || target.isContentEditable);
+
+      if (
+        event.key.toLowerCase() !== "f"
+        || event.repeat
+        || isEditing
+        || !window.matchMedia("(min-width: 821px)").matches
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (document.fullscreenElement) {
+        void document.exitFullscreen();
+      } else {
+        void document.documentElement.requestFullscreen();
+      }
+    }
+
+    window.addEventListener("keydown", toggleFullscreen);
+    return () => window.removeEventListener("keydown", toggleFullscreen);
+  }, []);
+
   return (
     <main className="app-shell">
       <section className="topbar" aria-label="Project">

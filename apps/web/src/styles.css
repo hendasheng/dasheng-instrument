@@ -631,8 +631,8 @@ h2 {
 }
 
 .fret-cell.in-scale span {
-  border-color: var(--active);
-  background: var(--active);
+  border-color: #aeb6c0;
+  background: #aeb6c0;
   color: var(--active-text);
 }
 

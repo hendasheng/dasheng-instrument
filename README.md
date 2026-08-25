@@ -75,6 +75,7 @@ Click-to-play Audio
 - 移动端缩小 workbench 内边距，为指板和控制区释放更多宽度
 - 标准调弦 `E A D G B E`
 - 指板高亮当前音阶音
+- 普通音阶标记使用柔和浅灰，避免压过 Root 和主要控制信息
 - Root note 使用独立颜色
 - 指板显示模式：
   - `Note`
@@ -87,6 +88,7 @@ Click-to-play Audio
 - Loop 开启时会循环播放当前 scale，每轮之间停顿两个音的时间；关闭时只播放一次
 - 音频播放复用单个 Web Audio context，支持移动端持续循环播放
 - 深色实底 UI，避免半透明荧光质感
+- 桌面端按 `F` 可进入或退出浏览器全屏
 
 当前 Scale 集合：
 

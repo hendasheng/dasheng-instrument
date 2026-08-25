@@ -124,6 +124,7 @@ Current interaction model:
 - Loop playback is controlled by a separate icon button beside play; repetitions pause for two note intervals, and when loop is off playback runs once.
 - Audio playback must reuse a shared AudioContext and disconnect finished per-note nodes so mobile loop playback does not exhaust browser audio resources.
 - Oscillator playback uses a `0.6` peak gain with short attack/release ramps; do not quietly reduce it without an explicit volume-control design.
+- On desktop, `F` toggles browser fullscreen. Ignore the shortcut during key repeat, while editing an input/select/textarea/contenteditable element, and on mobile-width viewports.
 
 Current scales:
 
@@ -176,6 +177,7 @@ Specific current choices:
 - Scale summary root is not specially highlighted, because the current key is already emphasized elsewhere.
 - Fretboard grid lines should be weaker than guitar string lines.
 - Root markers and normal markers must keep distinct normal, hover, and click states.
+- Normal in-scale fretboard markers use a softened light gray (`#aeb6c0`) rather than the brightest UI white so they do not overpower root markers or controls.
 - Hover/click transitions should be short and subtle.
 
 ## Documentation
