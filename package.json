@@ -1,0 +1,15 @@
+{
+  "name": "dasheng-instrument",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @dasheng/web",
+    "build": "npm run build -w @dasheng/web",
+    "preview": "npm run preview -w @dasheng/web"
+  }
+}
