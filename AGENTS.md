@@ -14,6 +14,7 @@ This is an npm workspace.
 
 ```text
 apps/web/           React + Vite + TypeScript app
+apps/minitool/      Independent offline Xiaohongshu minitool variant
 docs/versions/      Version notes
 packages/           Reserved for future shared libraries
 ```
@@ -24,9 +25,22 @@ Run commands from the repository root:
 npm install
 npm run dev
 npm run build
+npm run dev:minitool
+npm run build:minitool
 ```
 
 Do not move app code back into the root directory. The root should stay as the workspace and documentation layer.
+
+## Xiaohongshu Minitool
+
+- Minitool code and documentation live under `apps/minitool/`; do not mix container-only changes into `apps/web/`.
+- Read `apps/minitool/README.md` before changing or packaging the minitool.
+- The minitool is a separate offline distribution variant of 0.1, not the GitHub Pages build.
+- Keep `index.html` at the built package root and use only packaged relative resources.
+- The final page must load a classic external script, not `type="module"`, inline script, or dynamic import.
+- Do not use network requests, external resources, fullscreen, Worker, WASM, iframe, new windows, MIDI, device enumeration, or other restricted container capabilities.
+- Only generate a ZIP when the user explicitly asks. Generated `dist` and ZIP artifacts are not repository source.
+- Online and minitool source do not synchronize automatically. When behavior changes, explicitly decide whether both variants are in scope and update their documentation accordingly.
 
 ## GitHub Pages
 

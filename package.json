@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "dev": "npm run dev -w @dasheng/web",
+    "dev:minitool": "npm run dev -w @dasheng/minitool",
     "build": "npm run build -w @dasheng/web",
+    "build:minitool": "npm run build -w @dasheng/minitool",
     "preview": "npm run preview -w @dasheng/web"
   }
 }
