@@ -544,10 +544,11 @@ function App() {
               <span />
               {FRETS.map((fret) => (
                 <span
-                  className="fret-marker"
+                  className={fret === 0 ? "fret-marker open-string" : "fret-marker"}
                   key={fret}
                   style={{ "--fret-row": fret + 2 } as CSSProperties}
                 >
+                  {fret === 0 ? "0" : null}
                   {[3, 5, 7, 9].includes(fret) ? <i /> : null}
                   {fret === 12 ? (
                     <>
@@ -583,6 +584,7 @@ function App() {
                     <button
                       className={[
                         "fret-cell",
+                        fret === 0 ? "open-string" : "",
                         inScale ? "in-scale" : "",
                         isRoot ? "root" : "",
                         inScale && !inSelectedPosition ? "position-muted" : "",

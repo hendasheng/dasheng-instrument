@@ -188,3 +188,10 @@ Version notes start at `docs/versions/0.1.md`.
 ## References
 
 - [muted.io Guitar Scales](https://muted.io/guitar-scales/) — CAGED 全指板音阶与把位聚焦交互的产品参考。
+
+## 在线版空弦显示
+
+- 空弦区使用轻微不同的底色与低对比的 0 标记。
+- 空弦与第 1 品之间使用 6px 宽的灰色实心琴枕，手机竖屏对应显示为横向琴枕。
+- 六根弦保持平直，空弦音符与其他品位使用相同样式。
+- 本次仅更新在线版，小红书小工具尚未同步，后续单独确认。

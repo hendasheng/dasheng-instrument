@@ -207,3 +207,10 @@ When current behavior changes, update:
 - `README.md` for user-facing project state
 - `docs/versions/0.1.md` for version scope
 - `AGENTS.md` for development and UI rules
+
+## Open-string presentation (web only)
+
+- Distinguish fret 0 with a subtle background and muted 0 marker; separate it from fret 1 using a 6px solid #626b77 nut.
+- Place the nut vertically on desktop and horizontally in portrait mobile layout.
+- Keep all six string paths straight and retain the same note-marker styles for open and fretted notes.
+- This change applies only to apps/web. Do not sync apps/minitool until the user explicitly requests it.

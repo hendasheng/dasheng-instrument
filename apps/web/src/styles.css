@@ -925,3 +925,27 @@ h2 {
     font-size: clamp(9px, 3vw, 12px);
   }
 }
+
+/* Open strings sit outside the nut, before the fretted playing area. */
+.fret-cell.open-string,
+.fret-header .fret-marker.open-string {
+  background: #141a22;
+  border-right: 6px solid #626b77;
+}
+
+.fret-header .fret-marker.open-string {
+  color: var(--quiet);
+  font-weight: 400;
+}
+
+.fret-cell.open-string:hover {
+  background: var(--hover);
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .fret-cell.open-string,
+  .fret-header .fret-marker.open-string {
+    border-right: 0;
+    border-bottom: 6px solid #626b77;
+  }
+}
