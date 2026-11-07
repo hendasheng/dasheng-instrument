@@ -4,9 +4,9 @@ This file is for coding agents and future collaborators working on Loudroom / å¤
 
 ## Project Status
 
-Current baseline: **0.1**.
+Published web baseline: **0.1**. Local **0.2 is an unreleased draft**; minitool remains 0.1.
 
-The current app is a focused interactive Scale + Fretboard prototype. Keep changes scoped to this version unless the user explicitly asks to start a broader 0.2 direction.
+0.2 adds major-key chords and shared fretboard diagrams to the Scale + Fretboard prototype. See docs/versions/0.2.md. Render both scales and chord voicings with apps/web/src/Fretboard.tsx; maintain one shared renderer and stylesheet. ChordKit is no longer a dependency.
 
 ## Repository Shape
 
@@ -214,3 +214,9 @@ When current behavior changes, update:
 - Place the nut vertically on desktop and horizontally in portrait mobile layout.
 - Keep all six string paths straight and retain the same note-marker styles for open and fretted notes.
 - This change applies only to apps/web. Do not sync apps/minitool until the user explicitly requests it.
+
+## 0.2 priority and release guard
+
+- Resolve the distinction between diatonic chords, voicings, CAGED chord shapes and scale positions before adding features. Current CAGED logic is a fixed fret-window filter, not a validated shape system.
+- Read docs/versions/0.2.md before continuing. Keep chord and scale interactions independent until a coherent design is agreed.
+- Pages must remain on published 0.1. Local build/redirect files target 0.2 but are unreleased drafts. Do not push this draft to main without explicit release authorization: main automatically deploys Pages.
