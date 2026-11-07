@@ -949,3 +949,308 @@ h2 {
     border-bottom: 6px solid #626b77;
   }
 }
+
+.chord-panel { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.chord-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.chord-list { display:flex; gap:6px; margin:16px 0; flex-wrap:wrap; }
+.chord-choice { display:grid; gap:5px; min-width:64px; padding:10px 16px; background:var(--surface-soft); color:var(--ink); border:1px solid var(--line); border-radius:5px; cursor:pointer; }
+.chord-choice small { color:var(--muted); }
+.chord-choice.active { border-color:var(--muted); background:var(--hover); }
+.chord-choice:hover { background:var(--hover); }
+.chord-choice:focus-visible { outline:2px solid var(--tab-active-text); }
+.chord-detail { display:flex; align-items:center; gap:28px; }
+.chord-diagram { width:180px; flex-shrink:0; }
+.chord-hint { color:var(--muted); font-size:12px; line-height:1.8; }
+@media(max-width:600px) { .chord-panel { padding:11px; } .chord-choice { min-width:54px; padding:8px 10px; } .chord-detail { gap:14px; } .chord-diagram { width:150px; } }
+
+.chord-diagram svg { display:block; max-width:100%; height:auto; }
+.voicing-strings { display:flex; gap:5px; margin:12px 0; flex-wrap:wrap; }
+.voicing-strings button { display:grid; gap:6px; padding:8px; min-width:42px; color:var(--ink); background:var(--surface-soft); border:1px solid var(--line); border-radius:5px; cursor:pointer; }
+.voicing-strings small { color:var(--muted); font-size:11px; }
+.voicing-strings button:disabled { opacity:.4; cursor:default; }
+.voicing-strings button:hover:not(:disabled) { border-color:var(--muted); }
+.voicing-strings button:focus-visible { outline:2px solid var(--tab-active-text); }
+/* Filled note markers indicate a pressed string; rings indicate open strings. */
+.voicing-strings .string-note {
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  margin:auto;
+  border-radius:50%;
+  font-size:13px;
+  border:1px solid transparent;
+}
+.voicing-strings .string-fretted .string-note {
+  background:#aeb6c0;
+  border-color:#aeb6c0;
+  color:var(--active-text);
+}
+.voicing-strings .string-open .string-note {
+  background:var(--surface-soft);
+  border-color:var(--muted);
+  color:var(--ink);
+}
+.voicing-strings .string-muted .string-note { color:var(--muted); }
+.voicing-strings button:active:not(:disabled) .string-note { background:var(--ink); color:var(--active-text); }
+
+.chord-detail {
+  display:grid;
+  grid-template-columns:180px minmax(0, 360px);
+  align-items:center;
+  gap:32px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.voicing-summary { min-width:0; }
+.voicing-label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; font-size:12px; color:var(--ink); }
+.voicing-label span { color:var(--muted); font-size:11px; }
+.voicing-strings { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; margin:12px 0 16px; }
+.voicing-strings button { min-width:0; padding:9px 2px; gap:8px; }
+.voicing-summary > .chord-play { width:34px; height:34px; min-height:34px; padding:0; }
+@media(max-width:600px) {
+  .chord-detail { grid-template-columns:minmax(0,1fr); gap:16px; justify-items:center; }
+  .chord-detail .chord-diagram { width:164px; }
+  .voicing-summary { width:100%; max-width:360px; }
+  .voicing-strings { gap:5px; }
+}
+
+.chord-detail { display:flex; align-items:flex-start; gap:16px; }
+.chord-detail > .chord-play { width:34px; height:34px; margin-top:12px; padding:0; }
+.chord-note-targets circle { cursor:pointer; pointer-events:all; }
+.chord-note-targets circle:hover { fill:rgba(230,237,243,.12); }
+.chord-note-targets circle:focus-visible { outline:none; stroke:var(--ink); stroke-width:2; }
+.chord-note-targets .note-hit { animation:chord-note-hit 350ms ease-out; }
+@keyframes chord-note-hit { from { fill:rgba(230,237,243,.5); } to { fill:transparent; } }
+
+/* Both views share string, fret, nut and marker styles. */
+.fret-header, .string-row { grid-template-columns:48px repeat(var(--fret-count,16),minmax(0,1fr)); }
+.chord-detail > .voicing-board { flex:1; min-width:0; max-width:620px; }
+.voicing-board .fret-cell:disabled { cursor:default; }
+.voicing-board .fret-cell:disabled:hover { background:var(--surface-soft); }
+.voicing-board .fret-cell.open-string:disabled:hover { background:#141a22; }
+@media(max-width:600px) and (orientation:portrait) {
+  .fretboard { grid-template-rows:38px repeat(var(--fret-count,16),48px); }
+  .chord-detail { align-items:flex-start; }
+  .chord-detail > .voicing-board { max-width:320px; }
+}
+
+/* Compact chord voicing; the full scale map keeps its existing dimensions. */
+.chord-detail > .voicing-board { flex:0 1 340px; max-width:340px; }
+.voicing-board .fret-header,
+.voicing-board .string-row { grid-template-columns:36px repeat(var(--fret-count),minmax(0,1fr)); }
+.voicing-board .string-label,
+.voicing-board .fret-cell { min-height:34px; }
+.voicing-board .string-label { padding:0 4px; gap:2px; grid-template-columns:12px 1fr; }
+.voicing-board .string-label span { font-size:9px; }
+.voicing-board .string-label small { font-size:10px; }
+.voicing-board .fret-header span { min-height:22px; font-size:10px; }
+.voicing-board .fret-cell span { width:23px; height:23px; font-size:10px; }
+@media(max-width:600px) and (orientation:portrait) {
+  .chord-detail > .voicing-board { flex:0 1 210px; max-width:210px; grid-template-columns:24px repeat(6,minmax(0,1fr)); grid-template-rows:30px repeat(var(--fret-count),34px); }
+  .voicing-board .string-label { min-height:0; padding:2px 0; grid-template-columns:1fr; }
+  .voicing-board .fret-cell { min-height:0; }
+  .voicing-board .fret-marker { min-height:0; }
+}
+
+.chord-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:16px; }
+.chord-card { min-width:0; padding:12px; border:1px solid var(--line); border-radius:6px; background:var(--surface-soft); }
+.chord-card header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.chord-card header > div { display:flex; align-items:baseline; gap:10px; }
+.chord-card header small { color:var(--muted); font-size:12px; }
+.chord-card header strong { color:var(--ink); font-size:15px; }
+.chord-card header .play-scale { width:28px; height:28px; min-height:28px; padding:0; }
+.dominant-chord { margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+.dominant-chord .chord-card { width:min(100%,280px); margin-top:10px; }
+@media(max-width:600px) and (orientation:portrait) {
+  .chord-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .chord-card { padding:8px; }
+  .chord-card .voicing-board { grid-template-columns:20px repeat(6,minmax(0,1fr)); grid-template-rows:30px repeat(var(--fret-count),32px); }
+  .chord-card .voicing-board .fret-cell span { width:19px; height:19px; font-size:9px; }
+  .chord-card .voicing-board .fret-marker { font-size:9px; }
+}
+
+/* Continuous barre is shared with the board, never drawn as isolated dots. */
+.barre-cell::after { content:""; position:absolute; left:calc(50% - 4px); top:-1px; bottom:-1px; width:8px; background:#aeb6c0; pointer-events:none; }
+.barre-cell.barre-first::after { top:50%; border-radius:4px 4px 0 0; }
+.barre-cell.barre-last::after { bottom:50%; border-radius:0 0 4px 4px; }
+.chord-grid { grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:8px; }
+.chord-card { padding:8px; }
+.chord-card header { margin-bottom:7px; }
+.chord-card .voicing-board .fret-header,
+.chord-card .voicing-board .string-row { grid-template-columns:28px repeat(var(--fret-count),minmax(0,1fr)); }
+.chord-card .voicing-board .fret-cell,
+.chord-card .voicing-board .string-label { min-height:27px; }
+.chord-card .voicing-board .fret-header span { min-height:18px; }
+.chord-card .voicing-board .fret-cell span { width:19px; height:19px; font-size:9px; }
+.dominant-chord .chord-card { width:min(100%,190px); }
+@media(max-width:600px) and (orientation:portrait) {
+ .chord-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+ .chord-card { padding:5px; }
+ .chord-card header > div { gap:5px; }
+ .chord-card .voicing-board { grid-template-columns:16px repeat(6,minmax(0,1fr)); grid-template-rows:26px repeat(var(--fret-count),27px); }
+ .chord-card .voicing-board .fret-cell,.chord-card .voicing-board .string-label { min-height:0; }
+ .chord-card .voicing-board .fret-cell span { width:15px; height:15px; font-size:8px; }
+ .barre-cell::after { left:-1px; right:-1px; top:calc(50% - 4px); bottom:auto; width:auto; height:8px; }
+ .barre-cell.barre-first::after { top:calc(50% - 4px); right:50%; border-radius:0 4px 4px 0; }
+ .barre-cell.barre-last::after { bottom:auto; left:50%; border-radius:4px 0 0 4px; }
+}
+
+/* Voicing notation: only finger dots, string states and necessary fret numbers. */
+.voicing-board .string-label { grid-template-columns:1fr; padding:0; text-align:center; }
+.voicing-board .string-label span { font-size:12px; color:var(--muted); }
+.voicing-board .fret-cell span { width:12px !important; height:12px !important; border:0; }
+/* Border widths change the content center: align the barre with the marker grid. */
+.voicing-board .barre-cell::after { left:calc(50% - 3.5px); top:-1px; bottom:-1px; width:8px; height:auto; }
+.voicing-board .open-string.barre-cell::after { left:calc(50% - 6.5px); }
+.voicing-board .barre-cell.barre-first::after { top:calc(50% + .5px); }
+.voicing-board .barre-cell.barre-last::after { bottom:calc(50% - .5px); }
+@media(max-width:600px) and (orientation:portrait) {
+ .voicing-board .barre-cell::after { left:-1px; right:-1px; top:calc(50% - 3.5px); bottom:auto; width:auto; height:8px; }
+ .voicing-board .barre-cell.barre-first::after { left:-1px; right:calc(50% - .5px); top:calc(50% - 3.5px); bottom:auto; }
+ .voicing-board .barre-cell.barre-last::after { left:calc(50% + .5px); right:-1px; top:calc(50% - 3.5px); bottom:auto; }
+}
+
+/* Keep familiar fret dots and readable note names in compact voicings. */
+.voicing-board .fret-cell span { width:19px !important; height:19px !important; font-size:9px; }
+.voicing-board .fret-marker i { width:4px; height:4px; }
+@media(max-width:600px) and (orientation:portrait) {
+ .voicing-board .fret-cell span { width:16px !important; height:16px !important; font-size:8px; }
+}
+
+/* Voicing dots and barre segments share exactly the same cell-center anchors. */
+.voicing-board .fret-cell > span {
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+}
+.voicing-board .barre-cell::after,
+.voicing-board .open-string.barre-cell::after {
+  left:50%; right:auto;
+  top:-1px; bottom:-1px;
+  width:8px; height:auto;
+  transform:translateX(-50%);
+  border-radius:0;
+}
+.voicing-board .barre-cell.barre-first::after { top:50%; bottom:-1px; border-radius:4px 4px 0 0; }
+.voicing-board .barre-cell.barre-last::after { top:-1px; bottom:50%; border-radius:0 0 4px 4px; }
+@media(max-width:600px) and (orientation:portrait) {
+ .voicing-board .barre-cell::after,
+ .voicing-board .open-string.barre-cell::after {
+   left:-1px; right:-1px; top:50%; bottom:auto;
+   width:auto; height:8px; transform:translateY(-50%); border-radius:0;
+ }
+ .voicing-board .barre-cell.barre-first::after { left:-1px; right:50%; top:50%; bottom:auto; border-radius:0 4px 4px 0; }
+ .voicing-board .barre-cell.barre-last::after { left:50%; right:-1px; top:50%; bottom:auto; border-radius:4px 0 0 4px; }
+}
+
+/* Compact voicings need a quiet nut so notes remain the primary information. */
+.voicing-board .fret-cell.open-string,
+.voicing-board .fret-header .fret-marker.open-string {
+  border-right:3px solid #484f58;
+}
+@media(max-width:600px) and (orientation:portrait) {
+ .voicing-board .fret-cell.open-string,
+ .voicing-board .fret-header .fret-marker.open-string {
+   border-right:0;
+   border-bottom:3px solid #484f58;
+ }
+}
+
+/* Chord voicings use the familiar vertical fingering orientation at every size. */
+.chord-card .voicing-board {
+ display:grid;
+ grid-template-columns:16px repeat(6,minmax(0,1fr));
+ grid-template-rows:26px repeat(var(--fret-count),30px);
+ width:100%; max-width:190px; margin:0 auto;
+}
+.chord-card .voicing-board .fret-header,
+.chord-card .voicing-board .string-row { display:contents; }
+.chord-card .voicing-board .fret-header > span:first-child { display:none; }
+.chord-card .voicing-board .fret-marker {
+ grid-column:1; grid-row:var(--fret-row); min-height:0;
+ border-left:0; border-top:1px solid var(--fret-line);
+}
+.chord-card .voicing-board .string-label {
+ grid-column:var(--string-column); grid-row:1;
+ display:grid; grid-template-columns:1fr; place-items:center;
+ min-height:0; padding:0; border-top:0;
+ border-left:1px solid var(--fret-line); background:#0f141b;
+}
+.chord-card .voicing-board .string-label span { font-size:12px; }
+.chord-card .voicing-board .fret-cell {
+ grid-column:var(--string-column); grid-row:var(--fret-row); min-height:0; padding:0;
+}
+.chord-card .voicing-board .fret-cell::before {
+ left:50%; top:0; bottom:0; right:auto; width:1px; height:auto; transform:translateX(-50%);
+}
+.chord-card .voicing-board .fret-cell > span {
+ width:20px !important; height:20px !important; font-size:10px;
+}
+.chord-card .voicing-board .fret-cell.open-string,
+.chord-card .voicing-board .fret-header .fret-marker.open-string {
+ border-right:0; border-bottom:3px solid #484f58;
+}
+.chord-card .voicing-board .barre-cell::after {
+ left:-1px; right:-1px; top:50%; bottom:auto;
+ width:auto; height:8px; transform:translateY(-50%); border-radius:0;
+}
+.chord-card .voicing-board .barre-cell.barre-first::after {
+ left:-1px; right:50%; top:50%; bottom:auto; border-radius:0 4px 4px 0;
+}
+.chord-card .voicing-board .barre-cell.barre-last::after {
+ left:50%; right:-1px; top:50%; bottom:auto; border-radius:4px 0 0 4px;
+}
+@media(max-width:600px) {
+ .chord-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+ .chord-card { padding:8px; }
+}
+
+/* Fingering diagrams distinguish a pressed note from an unfretted open string. */
+.chord-card .voicing-board .fret-cell.open-string.in-scale > span {
+ background:#141a22;
+ border:1px solid var(--muted);
+ color:var(--ink);
+}
+.chord-card .voicing-board .fret-cell.open-string.root > span {
+ background:#141a22;
+ border-color:var(--root);
+ color:var(--root);
+}
+.chord-card .voicing-board .fret-cell.open-string:hover > span { border-color:var(--ink); }
+.chord-card .voicing-board .fret-cell.open-string:active > span {
+ background:#cfd8e3;
+ border-color:#c8d1dc;
+ color:#0d1117;
+}
+
+/* Cell boundaries are not extra strings in a vertical fingering diagram. */
+.chord-card .voicing-board .fret-cell,
+.chord-card .voicing-board .string-label,
+.chord-card .voicing-board .fret-header .fret-marker { border-left:0; }
+
+/* Chord voicings sit directly in the section, without nested card shells. */
+.chord-grid { column-gap:16px; row-gap:18px; }
+.chord-card { border:0; border-radius:0; background:transparent; padding:0; }
+.chord-card .voicing-board { border:0; border-radius:0; background:transparent; }
+.chord-card .voicing-board .string-label { background:transparent; }
+@media(max-width:600px) {
+ .chord-grid { column-gap:12px; row-gap:16px; }
+ .chord-card { padding:0; }
+}
+
+/* One quiet card boundary; no second frame around the fretboard. */
+.chord-card {
+ padding:10px;
+ border:1px solid var(--line);
+ border-radius:6px;
+ background:var(--surface-soft);
+}
+.chord-card .voicing-board { border:0; border-radius:0; }
+@media(max-width:600px) {
+ .chord-card { padding:8px; }
+}
+.chord-collapse { display:grid; place-items:center; width:30px; height:30px; padding:0; border:1px solid var(--line); border-radius:5px; color:var(--muted); background:var(--surface-soft); cursor:pointer; }
+.chord-collapse:hover { color:var(--ink); background:var(--hover); }
+.chord-collapse:focus-visible { outline:2px solid var(--tab-active-text); outline-offset:2px; }

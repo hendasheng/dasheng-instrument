@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties } from "react";
+import { Fretboard } from "./Fretboard";
 import { createRoot } from "react-dom/client";
 import { Music2, Pause, Play, Repeat } from "lucide-react";
 import "./styles.css";
+import { Chords } from "./Chords";
 
 type NoteName =
   | "C"
@@ -92,16 +93,6 @@ const SCALES: ScalePattern[] = [
   },
 ];
 
-const TUNING: Array<{ string: number; open: NoteName; midi: number }> = [
-  { string: 1, open: "E", midi: 64 },
-  { string: 2, open: "B", midi: 59 },
-  { string: 3, open: "G", midi: 55 },
-  { string: 4, open: "D", midi: 50 },
-  { string: 5, open: "A", midi: 45 },
-  { string: 6, open: "E", midi: 40 },
-];
-
-const FRETS = Array.from({ length: 16 }, (_, fret) => fret);
 const SCALE_NOTE_INTERVAL_MS = 260;
 const SCALE_LOOP_GAP_MS = SCALE_NOTE_INTERVAL_MS * 2;
 const CAGED_SHAPES: CagedShape[] = ["C", "A", "G", "E", "D"];
@@ -428,6 +419,7 @@ function App() {
           </div>
         </section>
 
+        {selectedScale.name === "Major" && <Chords key={keyNote} root={NOTE_NAMES.indexOf(keyNote)} onPlay={playMidi} />}
         <section className="workbench" aria-label="Interactive scale and fretboard">
           <div className="workbench-head">
             <div>
@@ -539,70 +531,11 @@ function App() {
             </div>
           </div>
 
-          <div className="fretboard" role="grid" aria-label="Guitar fretboard">
-            <div className="fret-header" aria-hidden="true">
-              <span />
-              {FRETS.map((fret) => (
-                <span
-                  className={fret === 0 ? "fret-marker open-string" : "fret-marker"}
-                  key={fret}
-                  style={{ "--fret-row": fret + 2 } as CSSProperties}
-                >
-                  {fret === 0 ? "0" : null}
-                  {[3, 5, 7, 9].includes(fret) ? <i /> : null}
-                  {fret === 12 ? (
-                    <>
-                      <i />
-                      <i />
-                    </>
-                  ) : null}
-                </span>
-              ))}
-            </div>
-
-            {TUNING.map((guitarString) => (
-              <div
-                className="string-row"
-                key={guitarString.string}
-                role="row"
-                style={{ "--string-column": 8 - guitarString.string } as CSSProperties}
-              >
-                <div className="string-label">
-                  <span>{guitarString.string}</span>
-                  <small>{guitarString.open}</small>
-                </div>
-                {FRETS.map((fret) => {
-                  const note = noteAt(guitarString.open, fret);
-                  const inScale = scaleNoteSet.has(note);
-                  const isRoot = note === keyNote;
-                  const inSelectedPosition = positionMode === "all"
-                    || isFretInCagedShape(fret, keyNote, cagedShape);
-                  const degree = degreeByNote.get(note);
-                  const fretLabel = getFretLabel(note, degree);
-
-                  return (
-                    <button
-                      className={[
-                        "fret-cell",
-                        fret === 0 ? "open-string" : "",
-                        inScale ? "in-scale" : "",
-                        isRoot ? "root" : "",
-                        inScale && !inSelectedPosition ? "position-muted" : "",
-                      ].join(" ")}
-                      key={`${guitarString.string}-${fret}`}
-                      style={{ "--fret-row": fret + 2 } as CSSProperties}
-                      type="button"
-                      onClick={() => playMidi(guitarString.midi + fret)}
-                      role="gridcell"
-                      aria-label={`String ${guitarString.string}, fret ${fret}, ${note}`}
-                    >
-                      {inScale ? <span>{fretLabel}</span> : null}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+          <Fretboard onPlay={playMidi} getMarker={(_string, fret, _midi, note) => scaleNoteSet.has(note) ? {
+            label: getFretLabel(note, degreeByNote.get(note)) ?? "",
+            root: note === keyNote,
+            muted: positionMode !== "all" && !isFretInCagedShape(fret, keyNote, cagedShape),
+          } : null} />
         </section>
       </section>
     </main>

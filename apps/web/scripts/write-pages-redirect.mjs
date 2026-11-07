@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const distRoot = resolve(import.meta.dirname, "..", "dist");
-const latestVersion = "0.1";
+const latestVersion = "0.2";
 
 mkdirSync(distRoot, { recursive: true });
 
