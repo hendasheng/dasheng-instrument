@@ -220,3 +220,9 @@ When current behavior changes, update:
 - Resolve the distinction between diatonic chords, voicings, CAGED chord shapes and scale positions before adding features. Current CAGED logic is a fixed fret-window filter, not a validated shape system.
 - Read docs/versions/0.2.md before continuing. Keep chord and scale interactions independent until a coherent design is agreed.
 - Pages must remain on published 0.1. Local build/redirect files target 0.2 but are unreleased drafts. Do not push this draft to main without explicit release authorization: main automatically deploys Pages.
+
+## 0.1 shared metronome
+
+- Reuse the copied Ambient Beat engine, panel generator and stylesheet in apps/web/src/ambient-metronome; source attribution and license live beside them.
+- Metronome.tsx handles lifecycle, control bindings and the source visibility behavior. Keep the bottom-floating natural-width panel independent of Key/Scale.
+- Supply theme/position through --metronome-* variables; portrait uses safe-area-aware bottom clearance. No minitool sync unless explicitly requested.

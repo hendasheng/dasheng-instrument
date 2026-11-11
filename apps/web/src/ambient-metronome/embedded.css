@@ -1,0 +1,13 @@
+.ambient-metronome-section {
+ --metronome-panel-bg:#151b23;
+ --metronome-panel-line:#30363d;
+ --metronome-group-border:#30363d;
+ --metronome-group-bg:#11161d;
+ --metronome-panel-shadow:0 8px 28px rgba(0,0,0,.3);
+}
+
+@media (orientation: portrait) {
+  .ambient-metronome-section {
+    --metronome-panel-bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 24px));
+  }
+}

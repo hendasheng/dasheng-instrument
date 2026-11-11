@@ -1,0 +1,481 @@
+.rhythm-panel {
+  --metronome-panel-inline-size: min(var(--metronome-panel-width, 520px), calc(100vw - 40px));
+  position: fixed;
+  left: 50%;
+  bottom: var(--metronome-panel-bottom, 20px);
+  z-index: var(--metronome-panel-z, 5);
+  display: grid;
+  gap: 6px;
+  width: var(--metronome-panel-inline-size);
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid var(--metronome-panel-line, rgba(255, 255, 255, 0.18));
+  border-radius: 8px;
+  background: var(--metronome-panel-bg, rgba(5, 5, 5, 0.72));
+  box-shadow: var(--metronome-panel-shadow, 0 18px 46px rgba(0, 0, 0, 0.38));
+  backdrop-filter: blur(12px);
+  color: var(--metronome-text, rgba(255, 255, 255, 0.92));
+  font-family: var(--metronome-font, inherit);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 220ms ease, transform 260ms ease;
+}
+
+body.rhythm-visible .rhythm-panel,
+body.rhythm-pinned .rhythm-panel {
+  cursor: auto;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.rhythm-panel .rhythm-primary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.rhythm-panel .control-group {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid var(--metronome-group-border, rgba(255, 255, 255, 0.1));
+  border-radius: 7px;
+  background: var(--metronome-group-bg, rgba(255, 255, 255, 0.035));
+}
+
+.rhythm-panel .group-label,
+.rhythm-panel .label {
+  color: var(--metronome-label, rgba(255, 255, 255, 0.72));
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rhythm-panel .label {
+  color: var(--metronome-muted, rgba(255, 255, 255, 0.56));
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.rhythm-panel .control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+
+.rhythm-panel .control-grid label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rhythm-panel .control-grid input,
+.rhythm-panel .control-grid select {
+  width: 100%;
+  min-width: 0;
+  height: var(--metronome-field-height, 28px);
+  border: 1px solid var(--metronome-field-border, rgba(255, 255, 255, 0.2));
+  border-radius: 6px;
+  background: var(--metronome-field-bg, rgba(255, 255, 255, 0.08));
+  color: var(--metronome-text, rgba(255, 255, 255, 0.92));
+  font: inherit;
+  font-size: var(--metronome-field-font-size, 12px);
+  font-weight: var(--metronome-field-font-weight, 750);
+  padding: 0 7px;
+}
+
+.rhythm-panel .control-grid select option {
+  background: var(--metronome-option-bg, #101010);
+  color: var(--metronome-option-text, #f7f7f7);
+}
+
+.rhythm-panel .control-grid input:hover,
+.rhythm-panel .control-grid select:hover {
+  border-color: var(--metronome-hover-border, rgba(255, 255, 255, 0.36));
+  background: var(--metronome-hover-bg, rgba(255, 255, 255, 0.14));
+}
+
+.rhythm-panel .beat-group {
+  gap: 5px;
+}
+
+.rhythm-panel .beat-strip {
+  display: grid;
+  grid-template-columns: repeat(var(--beats, 4), 1fr);
+  gap: 4px;
+  align-items: center;
+  min-height: 16px;
+  padding: 0 2px;
+}
+
+.rhythm-panel .beat-dot {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--metronome-beat, rgba(255, 255, 255, 0.18));
+}
+
+.rhythm-panel .beat-dot.downbeat {
+  height: 9px;
+  background: var(--metronome-downbeat, rgba(255, 255, 255, 0.32));
+}
+
+.rhythm-panel .beat-dot.active {
+  background: var(--metronome-accent, #ffffff);
+}
+
+.rhythm-panel .beat-dot.downbeat.active {
+  box-shadow: 0 0 0 3px var(--metronome-beat-ring, rgba(255, 255, 255, 0.08));
+}
+
+.rhythm-panel .rhythm-readout {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+}
+
+.rhythm-panel .rhythm-readout strong {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.rhythm-panel .rhythm-readout span {
+  overflow: hidden;
+  color: var(--metronome-muted, rgba(255, 255, 255, 0.56));
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rhythm-panel .offbeat-control,
+.rhythm-panel .volume-control {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  opacity: var(--metronome-secondary-opacity, 1);
+}
+
+.rhythm-panel .offbeat-control {
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-self: start;
+  justify-content: start;
+  width: max-content;
+}
+
+.rhythm-panel .offbeat-control input {
+  width: 16px;
+  min-width: 0;
+  height: 16px;
+  padding: 0;
+  accent-color: var(--metronome-accent, #ffffff);
+}
+
+.rhythm-panel .transport-bar {
+  display: grid;
+  grid-template-columns: max-content 220px minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+  padding-top: 5px;
+  border-top: 1px solid var(--metronome-divider, rgba(255, 255, 255, 0.1));
+}
+
+.rhythm-panel:not(.has-offbeat) .transport-bar {
+  grid-template-columns: minmax(0, 1fr) 170px;
+}
+
+.rhythm-panel .volume-control {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  width: 220px;
+  opacity: var(--metronome-volume-opacity, 0.7);
+  transition: opacity 160ms ease;
+}
+
+.rhythm-panel .volume-control:hover,
+.rhythm-panel .volume-control:focus-within {
+  opacity: var(--metronome-volume-active-opacity, 0.86);
+}
+
+.rhythm-panel:not(.has-offbeat) .volume-control {
+  width: auto;
+}
+
+@media (min-width: 681px) {
+  .rhythm-panel .volume-control {
+    width: 100%;
+    max-width: calc(var(--metronome-panel-inline-size) / 2);
+    justify-self: start;
+  }
+}
+
+.rhythm-panel .volume-control .label {
+  white-space: nowrap;
+}
+
+.rhythm-panel .volume-value {
+  min-width: 4ch;
+  color: var(--metronome-muted, rgba(255, 255, 255, 0.56));
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.rhythm-panel .volume-control input {
+  width: 100%;
+  min-width: 0;
+  height: var(--metronome-field-height, 28px);
+  border: 1px solid var(--metronome-volume-border, transparent);
+  border-radius: 6px;
+  background: var(--metronome-volume-bg, transparent);
+  padding: 0;
+  accent-color: var(
+    --metronome-volume-accent,
+    color-mix(in srgb, var(--metronome-accent, #ffffff) 62%, transparent)
+  );
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.rhythm-panel .transport-controls {
+  display: grid;
+  grid-template-columns: max-content 34px;
+  gap: 6px;
+  justify-content: end;
+  justify-self: end;
+  width: auto;
+  min-width: 0;
+}
+
+.rhythm-panel .transport-controls button {
+  height: var(--metronome-button-height, 28px);
+  min-width: 0;
+  border: 1px solid var(--metronome-button-border, rgba(255, 255, 255, 0.22));
+  border-radius: 6px;
+  background: var(--metronome-button-bg, rgba(255, 255, 255, 0.08));
+  color: var(--metronome-text, rgba(255, 255, 255, 0.92));
+  font: inherit;
+  font-size: 11px;
+  font-weight: var(--metronome-button-font-weight, 800);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.rhythm-panel .transport-controls button:first-child {
+  border-color: var(--metronome-primary-border, #ffffff);
+  background: var(--metronome-primary-bg, #ffffff);
+  color: var(--metronome-primary-text, #030303);
+}
+
+.rhythm-panel .transport-controls button:hover {
+  border-color: var(--metronome-hover-border, rgba(255, 255, 255, 0.36));
+  background: var(--metronome-hover-bg, rgba(255, 255, 255, 0.14));
+}
+
+.rhythm-panel .volume-control input:hover {
+  border-color: var(--metronome-volume-hover-border, transparent);
+  background: var(--metronome-volume-hover-bg, rgba(255, 255, 255, 0.04));
+}
+
+.rhythm-panel .transport-controls button:first-child:hover {
+  background: var(
+    --metronome-primary-hover-bg,
+    color-mix(in srgb, var(--metronome-primary-bg, #ffffff) 82%, transparent)
+  );
+  color: var(--metronome-primary-text, #030303);
+}
+
+.rhythm-panel .transport-controls .icon-button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.rhythm-panel .transport-controls svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rhythm-panel .transport-toggle {
+  position: relative;
+  width: 64px;
+}
+
+.rhythm-panel .transport-toggle::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #173c24;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+}
+
+.rhythm-panel .transport-toggle.is-playing::after {
+  background: #238b45;
+}
+
+.rhythm-panel .transport-toggle.signal-pulse::after {
+  animation: metronome-signal-pulse 220ms ease-out;
+}
+
+@keyframes metronome-signal-pulse {
+  0% {
+    background: #75ff9d;
+    box-shadow: 0 0 3px #39ff70, 0 0 8px rgba(57, 255, 112, 0.9);
+  }
+  100% {
+    background: #238b45;
+    box-shadow: 0 0 0 rgba(57, 255, 112, 0);
+  }
+}
+
+.rhythm-panel .transport-toggle svg {
+  display: none;
+}
+
+.rhythm-panel input:focus-visible,
+.rhythm-panel select:focus-visible,
+.rhythm-panel button:focus-visible {
+  outline: 2px solid var(--metronome-focus, rgba(255, 255, 255, 0.72));
+  outline-offset: 2px;
+}
+
+@media (max-width: 680px) {
+  .rhythm-panel {
+    left: var(--metronome-panel-mobile-inset, 10px);
+    right: var(--metronome-panel-mobile-inset, 10px);
+    bottom: var(--metronome-panel-mobile-bottom, 10px);
+    width: auto;
+    max-height: var(--metronome-panel-mobile-max-height, calc(58svh - 20px));
+    padding: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(12px);
+  }
+
+  body.rhythm-visible .rhythm-panel,
+  body.rhythm-pinned .rhythm-panel {
+    transform: translateY(0);
+  }
+
+  .rhythm-panel .rhythm-primary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .rhythm-panel .rhythm-primary .control-group {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .rhythm-panel .rhythm-primary .group-label,
+  .rhythm-panel .beat-group > .group-label {
+    display: none;
+  }
+
+  .rhythm-panel .control-group {
+    gap: 4px;
+    padding: 5px;
+  }
+
+  .rhythm-panel .control-grid {
+    gap: 4px;
+  }
+
+  .rhythm-panel .control-grid label {
+    gap: 3px;
+  }
+
+  .rhythm-panel .control-grid input,
+  .rhythm-panel .control-grid select {
+    height: 26px;
+    padding: 0 5px;
+  }
+
+  .rhythm-panel .rhythm-readout {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .rhythm-panel .beat-group {
+    padding: 5px;
+  }
+
+  .rhythm-panel .transport-bar,
+  .rhythm-panel:not(.has-offbeat) .transport-bar {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding-top: 4px;
+  }
+
+  .rhythm-panel .volume-control {
+    justify-self: stretch;
+    width: auto;
+  }
+
+  .rhythm-panel .transport-controls {
+    grid-template-columns: minmax(0, 1fr) 34px;
+    justify-self: stretch;
+    width: auto;
+    gap: 4px;
+  }
+
+  .rhythm-panel .transport-controls button {
+    height: 30px;
+  }
+
+  .rhythm-panel .transport-toggle {
+    display: grid;
+    place-items: center;
+    width: auto;
+    padding: 0;
+  }
+
+  .rhythm-panel .transport-toggle .button-label {
+    display: none;
+  }
+
+  .rhythm-panel .transport-toggle svg {
+    display: block;
+  }
+}
+
+@media (max-width: 680px) and (orientation: portrait) {
+  .rhythm-panel .transport-bar {
+    grid-template-columns: max-content minmax(0, 1fr) var(--metronome-mobile-transport-width, 88px);
+  }
+
+  .rhythm-panel:not(.has-offbeat) .transport-bar {
+    grid-template-columns: minmax(0, 1fr) var(--metronome-mobile-transport-width, 88px);
+  }
+
+  .rhythm-panel .volume-control {
+    justify-self: start;
+    width: calc(100% - var(--metronome-mobile-volume-gap, 12px));
+    max-width: var(--metronome-mobile-volume-width, 260px);
+  }
+}

@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { createRoot } from "react-dom/client";
 import { Music2, Pause, Play, Repeat } from "lucide-react";
 import "./styles.css";
+import { Metronome } from "./Metronome";
 
 type NoteName =
   | "C"
@@ -605,6 +606,7 @@ function App() {
           </div>
         </section>
       </section>
+      <Metronome />
     </main>
   );
 }
